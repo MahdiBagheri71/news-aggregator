@@ -13,6 +13,7 @@ class AuthLoginRequest extends FormRequest
         return [
             /**
              * @example admin@test.com
+             *
              * @default admin@test.com
              */
             'email' => [
@@ -22,6 +23,7 @@ class AuthLoginRequest extends FormRequest
             ],
             /**
              * @example password
+             *
              * @default password
              */
             'password' => [
