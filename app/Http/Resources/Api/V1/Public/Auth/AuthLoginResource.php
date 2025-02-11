@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Resources\Api\V1\Public\Auth;
 
-use App\Http\Traits\ApiResourceBase;
 use App\Models\User;
+use App\Traits\ApiResourceBase;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
