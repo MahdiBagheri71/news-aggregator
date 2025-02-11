@@ -7,10 +7,9 @@ use Dedoc\Scramble\Scramble;
 use Dedoc\Scramble\Support\Generator\OpenApi;
 use Dedoc\Scramble\Support\Generator\SecurityScheme;
 use Illuminate\Routing\Route;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Gate;
-
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -38,7 +37,7 @@ class AppServiceProvider extends ServiceProvider
 
         Scramble::afterOpenApiGenerated(static function (OpenApi $openApi) {
             $openApi->secure(
-                SecurityScheme::http('basic')
+                SecurityScheme::http('bearer', 'token')
             );
         });
     }
