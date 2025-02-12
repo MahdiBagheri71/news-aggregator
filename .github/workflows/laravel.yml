@@ -8,8 +8,13 @@ on:
 
 jobs:
   laravel-tests:
-
     runs-on: ubuntu-latest
+
+    env:
+      DB_CONNECTION: sqlite
+      DB_DATABASE: database/testing.sqlite
+      NEWS_API_KEY: ${{ secrets.NEWS_API_KEY }}
+      APP_ENV: testing
 
     steps:
       - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
@@ -29,26 +34,14 @@ jobs:
       - name: Directory Permissions
         run: chmod -R 777 storage bootstrap/cache
 
-      - name: Create Database
-        run: |
-          mkdir -p database
-          touch database/database.sqlite
-
       - name: Create Testing Database
         run: |
+          mkdir -p database
           touch database/testing.sqlite
 
-      - name: Run Migrations
-        env:
-          DB_CONNECTION: sqlite
-          DB_DATABASE: database/database.sqlite
-          NEWS_API_KEY: ${{ secrets.NEWS_API_KEY }}
-        run: php artisan migrate --force
+      - name: Run Migrations and Seeders
+        run: |
+          php artisan migrate:fresh --seed --force
 
       - name: Execute tests (Unit and Feature tests) via PHPUnit/Pest
-        env:
-          DB_CONNECTION: sqlite
-          DB_DATABASE: database/testing.sqlite
-          NEWS_API_KEY: ${{ secrets.NEWS_API_KEY }}
-          APP_ENV: testing
-        run: php artisan test
+        run: vendor/bin/pest
