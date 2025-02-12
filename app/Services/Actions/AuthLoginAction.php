@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Services\Api\Actions;
+namespace App\Services\Actions;
 
 use App\Models\User;
-use App\Services\Api\DTO\AuthLoginDTO;
+use App\Services\DTO\AuthLoginDTO;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
 
