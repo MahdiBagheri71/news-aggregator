@@ -14,7 +14,7 @@ class ArticleFilterAction
     public function handle(array $data): Paginator
     {
         return QueryBuilder::for(Article::class)
-            ->defaultSort('published_at')
+            ->defaultSort('-published_at')
             ->allowedFields([
                 'id',
                 'title',
