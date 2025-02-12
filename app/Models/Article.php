@@ -26,7 +26,7 @@ class Article extends Model
     protected function casts(): array
     {
         return [
-            'published_at' => 'timestamp',
+            'published_at' => 'datetime',
             'extra_data' => 'collection',
             'service' => ArticleServiceEnum::class,
         ];

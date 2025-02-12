@@ -20,8 +20,8 @@ class ArticleResource extends JsonResource
             'url' => $this->when($this?->url, $this?->url),
             'content' => $this->when($this?->content, $this?->content),
             'author' => $this->when($this?->author, $this?->author),
-            'extra_data' => $this->when($this?->extra_data ?? null, $this?->extra_data),
-            'published_at' => $this->when($this?->published_at ?? null, $this?->published_at),
+            'extra_data' => $this->when($this?->extra_data, $this?->extra_data),
+            'published_at' => $this->when($this?->published_at, $this?->published_at?->format('Y-m-d H:i:s')),
         ];
     }
 }
