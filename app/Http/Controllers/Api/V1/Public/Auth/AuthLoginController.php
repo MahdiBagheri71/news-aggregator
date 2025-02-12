@@ -7,8 +7,8 @@ namespace App\Http\Controllers\Api\V1\Public\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\V1\Public\Auth\AuthLoginRequest;
 use App\Http\Resources\Api\V1\Public\Auth\AuthLoginResource;
-use App\Services\Api\Actions\AuthLoginAction;
-use App\Services\Api\DTO\AuthLoginDTO;
+use App\Services\Actions\AuthLoginAction;
+use App\Services\DTO\AuthLoginDTO;
 use Illuminate\Http\Response;
 
 /**
