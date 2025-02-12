@@ -7,7 +7,6 @@ namespace Database\Factories;
 use App\Enums\ArticleServiceEnum;
 use App\Models\Article;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Carbon;
 
 class ArticleFactory extends Factory
 {

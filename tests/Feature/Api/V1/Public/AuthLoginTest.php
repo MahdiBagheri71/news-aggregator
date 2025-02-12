@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 use App\Http\Resources\Api\V1\Public\Auth\AuthLoginResource;
 use App\Models\User;
-use App\Services\Api\Actions\AuthLoginAction;
-use App\Services\Api\DTO\AuthLoginDTO;
+use App\Services\Actions\AuthLoginAction;
+use App\Services\DTO\AuthLoginDTO;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpFoundation\Response;
