@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Enums;
 
+use App\Services\NewsApiServices\BBCNewsService;
 use App\Services\NewsApiServices\GuardianService;
 use App\Services\NewsApiServices\NewsApiService;
 use App\Traits\BaseEnum;
@@ -22,6 +23,7 @@ enum ArticleServiceEnum: string
         return match ($this) {
             self::NEWS_API => app(NewsApiService::class),
             self::THE_GUARDIAN => app(GuardianService::class),
+            self::BBC_NEWS => app(BBCNewsService::class),
             default => throw new \RuntimeException("Article service not implemented for {$this->value}"),
         };
     }

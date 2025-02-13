@@ -38,7 +38,7 @@ class GuardianService extends ArticleService
             if ($response->ok()) {
                 $data = $response->json();
 
-                if (! isset($data['response']['results']) || ! is_array($data['response']['results'] ?? [])) {
+                if (! isset($data['response']['results']) || ! is_array($data['response']['results'])) {
                     Log::error('Invalid Guardian API response', ['response' => $data]);
 
                     return [];

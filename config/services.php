@@ -45,4 +45,9 @@ return [
         'url' => env('GUARDIAN_API_URL', 'https://content.guardianapis.com'),
     ],
 
+    'bbc' => [
+        'key' => env('BBC_NEWS_API_KEY'),
+        'url' => env('BBC_NEWS_API_URL', 'https://newsapi.org/v2'), // BBC uses NewsAPI.org
+    ],
+
 ];
