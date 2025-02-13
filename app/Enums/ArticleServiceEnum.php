@@ -16,11 +16,11 @@ enum ArticleServiceEnum: string
     case THE_GUARDIAN = 'The Guardian';
     case BBC_NEWS = 'BBC News';
 
-    public function serviceClass()
+    public function getArticleService()
     {
         return match ($this) {
             self::NEWS_API => app(NewsApiService::class),
-            default => null,
+            default => throw new \RuntimeException("Article service not implemented for {$this->value}"),
         };
     }
 }

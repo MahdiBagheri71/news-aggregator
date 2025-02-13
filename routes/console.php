@@ -9,4 +9,4 @@ Artisan::command('inspire', function () {
 
 use Illuminate\Support\Facades\Schedule;
 
-Schedule::command('articles:fetch')->everyMinute();
+Schedule::command('articles:fetch')->hourly();

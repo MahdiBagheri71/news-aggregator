@@ -34,9 +34,9 @@ class ArticleFilterAction
                 AllowedFilter::exact('id'),
                 AllowedFilter::scope('published_at_before'),
                 AllowedFilter::scope('published_at_after'),
-                'title',
-                'description',
-                'content',
+                AllowedFilter::partial('title'),
+                AllowedFilter::partial('description'),
+                AllowedFilter::partial('content'),
             ])
             ->simplePaginate(perPage: $data['per_page'] ?? 15, page: $data['page'] ?? 1);
     }
