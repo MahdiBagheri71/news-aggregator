@@ -42,12 +42,13 @@ class FetchArticleServiceJob implements ShouldBeUnique, ShouldQueue
             'error' => $exception->getMessage(),
         ]);
     }
+
     public function handle(): void
     {
         \DB::transaction(function () {
             $setting = $this->serviceSetting;
             $serviceName = $setting->service_name ?? throw new \RuntimeException('Service name not set');
-            $service = $serviceName->serviceClass() ?? throw new \RuntimeException('Service class not found');
+            $service = $serviceName->getArticleService() ?? throw new \RuntimeException('Service class not found');
             if ($setting->is_active) {
                 $lastUpdated = $setting->last_updated_at;
                 $updateInterval = $setting->update_interval;

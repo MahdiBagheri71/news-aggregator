@@ -48,7 +48,7 @@ class NewsApiService extends ArticleService
                     return [];
                 }
 
-                return $data['articles'] ?? [];
+                return $data['articles'];
             }
 
             return [];
