@@ -19,6 +19,21 @@ class ServiceSettingSeeder extends Seeder
                 'is_active' => true,
                 'update_interval' => 5,
             ],
+            [
+                'service_name' => ArticleServiceEnum::THE_GUARDIAN,
+                'is_active' => true,
+                'update_interval' => 5,
+            ],
+            [
+                'service_name' => ArticleServiceEnum::BBC_NEWS,
+                'is_active' => true,
+                'update_interval' => 5,
+            ],
+            [
+                'service_name' => ArticleServiceEnum::NY_TIMES,
+                'is_active' => true,
+                'update_interval' => 5,
+            ],
         ])->each(function (array $setting) {
             ServiceSetting::updateOrCreate([
                 'service_name' => $setting['service_name'],

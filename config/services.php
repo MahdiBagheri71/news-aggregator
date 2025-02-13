@@ -40,4 +40,19 @@ return [
         'url' => env('NEWS_API_URL', 'https://newsapi.org/v2'),
     ],
 
+    'guardian' => [
+        'key' => env('GUARDIAN_API_KEY'),
+        'url' => env('GUARDIAN_API_URL', 'https://content.guardianapis.com'),
+    ],
+
+    'bbc' => [
+        'key' => env('BBC_NEWS_API_KEY'),
+        'url' => env('BBC_NEWS_API_URL', 'https://newsapi.org/v2'), // BBC uses NewsAPI.org
+    ],
+
+    'ny_times' => [
+        'key' => env('NY_TIMES_API_KEY'),
+        'url' => env('NY_TIMES_API_URL', 'https://api.nytimes.com/svc'),
+    ],
+
 ];

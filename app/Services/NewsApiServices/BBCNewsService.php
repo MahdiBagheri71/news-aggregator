@@ -11,7 +11,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
-class NewsApiService extends ArticleService
+class BBCNewsService extends ArticleService
 {
     protected string $apiKey;
 
@@ -19,8 +19,8 @@ class NewsApiService extends ArticleService
 
     public function __construct()
     {
-        $this->apiKey = config('services.news_api.key');
-        $this->apiUrl = rtrim(config('services.news_api.url'), '/');
+        $this->apiKey = config('services.bbc.key');
+        $this->apiUrl = rtrim(config('services.bbc.url'), '/');
     }
 
     public function fetchArticles(array $queryParams = []): array
@@ -28,22 +28,20 @@ class NewsApiService extends ArticleService
         try {
             $response = Http::retry(3, 100)
                 ->timeout(5)
-                ->get("{$this->apiUrl}/everything", [
-                    'apiKey' => $this->apiKey,
-                    'q' => 'latest-news',
+                ->withHeaders([
+                    'X-Api-Key' => $this->apiKey,
+                ])
+                ->get("{$this->apiUrl}/articles", [
+                    'sources' => 'bbc-news',
+                    'language' => 'en',
                     ...$queryParams,
                 ]);
 
             if ($response->ok()) {
                 $data = $response->json();
 
-                if (! isset($data['status']) || $data['status'] !== 'ok') {
-                    Log::error('Invalid API response status', ['response' => $data]);
-
-                    return [];
-                }
                 if (! isset($data['articles']) || ! is_array($data['articles'])) {
-                    Log::error('Invalid articles data', ['response' => $data]);
+                    Log::error('Invalid BBC API response', ['response' => $data]);
 
                     return [];
                 }
@@ -53,7 +51,7 @@ class NewsApiService extends ArticleService
 
             return [];
         } catch (\Throwable $throwable) {
-            \Log::error($throwable->getMessage());
+            Log::error($throwable->getMessage());
         }
 
         return [];
@@ -63,18 +61,19 @@ class NewsApiService extends ArticleService
     {
         $extraData = [
             'source' => $article['source'] ?? null,
-            'urlToImage' => $article['urlToImage'] ?? null,
+            'category' => $article['category'] ?? null,
+            'image' => $article['urlToImage'] ?? null,
         ];
 
         return new ArticleData(
             title: $article['title'] ?? '',
             url: $article['url'] ?? '',
             description: $article['description'] ?? '',
-            service: ArticleServiceEnum::NEWS_API,
+            service: ArticleServiceEnum::BBC_NEWS,
             content: $article['content'] ?? '',
             author: $article['author'] ?? '',
             extra_data: $extraData,
-            published_at: $article['publishedAt'] ? Carbon::parse($article['publishedAt']) : null,
+            published_at: isset($article['publishedAt']) ? Carbon::parse($article['publishedAt']) : null,
         );
     }
 }
