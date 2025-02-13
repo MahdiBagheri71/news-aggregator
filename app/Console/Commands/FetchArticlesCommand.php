@@ -25,10 +25,16 @@ class FetchArticlesCommand extends Command
         $this->info('Start : Fetching latest articles from API');
 
         ServiceSetting::query()
+            ->where('is_active', true)
             ->latest('last_updated_at')
             ->chunk(10, function ($serviceSettings) {
                 foreach ($serviceSettings as $setting) {
-                    FetchArticleServiceJob::dispatchSync($setting);
+                    try {
+                        FetchArticleServiceJob::dispatch($setting);
+                    } catch (\Exception $e) {
+                        $this->error("Failed to process service {$setting->service_name}: {$e->getMessage()}");
+                        \Log::error($e);
+                    }
                 }
             });
 
