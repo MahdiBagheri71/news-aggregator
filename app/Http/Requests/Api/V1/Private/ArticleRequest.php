@@ -4,12 +4,16 @@ declare(strict_types=1);
 
 namespace App\Http\Requests\Api\V1\Private;
 
+use App\Traits\FilterRequestArrayTrait;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ArticleRequest extends FormRequest
 {
+    use FilterRequestArrayTrait;
+
     public function rules(): array
     {
+
         return [
             'sort' => [
                 'nullable',
@@ -22,6 +26,15 @@ class ArticleRequest extends FormRequest
             'fields[articles]' => [
                 'nullable',
                 'string',
+                'regex:/^[a-zA-Z_,]+$/',
+                function ($attribute, $value, $fail) {
+                    $allowedFields = ['id', 'title', 'content', 'description', 'url', 'published_at', 'author', 'extra_data'];
+                    $fields = explode(',', $value);
+                    $invalidFields = array_diff($fields, $allowedFields);
+                    if (! empty($invalidFields)) {
+                        $fail('Invalid fields: '.implode(', ', $invalidFields));
+                    }
+                },
             ],
             'filter[id]' => [
                 'nullable',
