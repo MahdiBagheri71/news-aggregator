@@ -35,18 +35,22 @@ class FetchArticleServiceJob implements ShouldBeUnique, ShouldQueue
         return (string) $this->serviceSetting->id;
     }
 
+    public function failed(\Throwable $exception): void
+    {
+        Log::error('Article fetch job failed', [
+            'service' => $this->serviceSetting->service_name?->value,
+            'error' => $exception->getMessage(),
+        ]);
+    }
     public function handle(): void
     {
         \DB::transaction(function () {
-
             $setting = $this->serviceSetting;
-            $serviceName = $setting->service_name;
-            $service = $serviceName?->getArticleService();
-
-            if (isset($serviceName,$service) && $setting->is_active) {
+            $serviceName = $setting->service_name ?? throw new \RuntimeException('Service name not set');
+            $service = $serviceName->serviceClass() ?? throw new \RuntimeException('Service class not found');
+            if ($setting->is_active) {
                 $lastUpdated = $setting->last_updated_at;
                 $updateInterval = $setting->update_interval;
-
                 if ($lastUpdated === null || $lastUpdated->diffInMinutes(now()) >= $updateInterval) {
                     Log::info("Fetching articles from {$serviceName?->value}...");
                     $service->saveArticles();
@@ -59,6 +63,6 @@ class FetchArticleServiceJob implements ShouldBeUnique, ShouldQueue
             } else {
                 Log::warning("Service {$serviceName?->value} is not active.");
             }
-        }, 5);
+        });
     }
 }
