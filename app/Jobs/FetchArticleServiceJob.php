@@ -41,7 +41,7 @@ class FetchArticleServiceJob implements ShouldBeUnique, ShouldQueue
 
             $setting = $this->serviceSetting;
             $serviceName = $setting->service_name;
-            $service = $serviceName?->serviceClass();
+            $service = $serviceName?->getArticleService();
 
             if (isset($serviceName,$service) && $setting->is_active) {
                 $lastUpdated = $setting->last_updated_at;
