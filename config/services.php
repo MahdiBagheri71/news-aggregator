@@ -50,4 +50,9 @@ return [
         'url' => env('BBC_NEWS_API_URL', 'https://newsapi.org/v2'), // BBC uses NewsAPI.org
     ],
 
+    'ny_times' => [
+        'key' => env('NY_TIMES_API_KEY'),
+        'url' => env('NY_TIMES_API_URL', 'https://api.nytimes.com/svc'),
+    ],
+
 ];
