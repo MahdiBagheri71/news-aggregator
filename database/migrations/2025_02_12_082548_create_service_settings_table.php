@@ -12,9 +12,9 @@ return new class extends Migration
     {
         Schema::create('service_settings', function (Blueprint $table) {
             $table->id();
-            $table->string('service_name');
+            $table->string('service_name')->unique()->index();
             $table->boolean('is_active')->default(true);
-            $table->integer('update_interval')->default(60);
+            $table->unsignedInteger('update_interval')->default(60);
             $table->timestamp('last_updated_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
