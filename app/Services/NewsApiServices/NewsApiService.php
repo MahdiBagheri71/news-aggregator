@@ -9,6 +9,7 @@ use App\Services\Contracts\ArticleService;
 use App\Services\DTO\ArticleData;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class NewsApiService extends ArticleService
 {
@@ -25,14 +26,27 @@ class NewsApiService extends ArticleService
     public function fetchArticles(array $queryParams = []): array
     {
         try {
-            $response = Http::get("{$this->apiUrl}/everything", [
-                'apiKey' => $this->apiKey,
-                'q' => 'latest-news',
-                ...$queryParams,
-            ]);
+            $response = Http::retry(3, 100)
+                ->timeout(5)
+                ->get("{$this->apiUrl}/everything", [
+                    'apiKey' => $this->apiKey,
+                    'q' => 'latest-news',
+                    ...$queryParams,
+                ]);
 
             if ($response->ok()) {
                 $data = $response->json();
+
+                if (! isset($data['status']) || $data['status'] !== 'ok') {
+                    Log::error('Invalid API response status', ['response' => $data]);
+
+                    return [];
+                }
+                if (! isset($data['articles']) || ! is_array($data['articles'])) {
+                    Log::error('Invalid articles data', ['response' => $data]);
+
+                    return [];
+                }
 
                 return $data['articles'] ?? [];
             }
