@@ -6,8 +6,8 @@ A Laravel-based REST API for aggregating and managing news articles.
 
 - PHP >= 8.1
 - Composer
-- SQLite 3
-- Git
+- SQLite >= 3.8.8
+- Git >= 2.0.0
 - News API Key ([Get it here](https://newsapi.org/register))
 
 ## Installation & Setup
@@ -29,7 +29,7 @@ cp .env.example .env
 php artisan key:generate
 ```
 
-Update `.env` file with following configurations:
+Update the `.env` file with the following configurations:
 ```env
 DB_CONNECTION=sqlite
 # Comment out or remove other DB_* settings
