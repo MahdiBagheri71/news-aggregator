@@ -8,11 +8,11 @@ use App\Services\NewsApiServices\BBCNewsService;
 use App\Services\NewsApiServices\GuardianService;
 use App\Services\NewsApiServices\NewsApiService;
 use App\Services\NewsApiServices\NYTimesService;
-use App\Traits\BaseEnum;
+use App\Traits\BaseEnumTrait;
 
 enum ArticleServiceEnum: string
 {
-    use BaseEnum;
+    use BaseEnumTrait;
     case NEWS_API = 'NewsApi';
     case OPEN_NEWS = 'OpenNews';
     case NEWS_CRED = 'NewsCred';

@@ -15,6 +15,8 @@ pest()->extend(Tests\TestCase::class)
     ->use(Illuminate\Foundation\Testing\RefreshDatabase::class)
     ->in('Feature');
 
+uses(Tests\TestCase::class)->in('Architecture');
+
 /*
 |--------------------------------------------------------------------------
 | Expectations
@@ -28,6 +30,10 @@ pest()->extend(Tests\TestCase::class)
 
 expect()->extend('toBeOne', function () {
     return $this->toBe(1);
+});
+
+expect()->extend('toHaveProperSuffix', function (string $suffix) {
+    return $this->toHaveSuffix($suffix);
 });
 
 /*

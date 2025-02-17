@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Resources\Api\V1\Private;
 
 use App\Models\User;
-use App\Traits\ApiResourceBase;
+use App\Traits\ApiResourceBaseTrait;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -14,7 +14,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  */
 class AuthMeResource extends JsonResource
 {
-    use ApiResourceBase;
+    use ApiResourceBaseTrait;
 
     public function toArray(Request $request): array
     {

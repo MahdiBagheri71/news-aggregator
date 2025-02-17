@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Traits;
 
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
-trait ApiResourceBase
+trait ApiResourceBaseTrait
 {
     public function __construct(
         $resource,
