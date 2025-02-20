@@ -60,6 +60,10 @@ class ArticleRequest extends FormRequest
                 'nullable',
                 'string',
             ],
+            'filter[search]' => [
+                'nullable',
+                'string',
+            ],
             'page' => [
                 'nullable',
                 'min:1',
