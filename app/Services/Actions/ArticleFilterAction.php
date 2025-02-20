@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Services\Actions;
 
 use App\Models\Article;
+use App\Services\SpatieQueryBuilder\Filters\FullTextSearchArticleFilter;
 use Illuminate\Contracts\Pagination\Paginator;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -37,6 +38,7 @@ class ArticleFilterAction
                 AllowedFilter::partial('title'),
                 AllowedFilter::partial('description'),
                 AllowedFilter::partial('content'),
+                AllowedFilter::custom('search', new FullTextSearchArticleFilter),
             ])
             ->simplePaginate(perPage: $data['per_page'] ?? 15, page: $data['page'] ?? 1);
     }
